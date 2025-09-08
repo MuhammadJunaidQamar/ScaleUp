@@ -1,5 +1,7 @@
+
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/custom_textfeild.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,52 +10,67 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: SingleChildScrollView(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text("app"),
-                  Image.asset('assets/owl.jpg'),
-                  customTextField(
-                    label: 'email',
-                    hint: 'example@gmail.com',
-                    inputType: TextInputType.emailAddress,
-                  ),
-                  customTextField(
-                    label: 'password',
-                    hint: '*****',
-                    inputType: TextInputType.text,
-                  ),
-                  InkWell(
-                    onTap: () {},
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text("button"),
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+  }
+}
 
-                      decoration: BoxDecoration(
-                        color: Colors.blueGrey.shade100,
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        appBar: AppBar(
-          title: Text('My app'),
-          backgroundColor: Colors.amber.shade300,
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  Random randomNum = Random();
+  int value = 0;
+  int todayNum = 4;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Container(
+          color: Colors.grey.shade300,
+          width: 300,
+          height: value == todayNum ? double.infinity : 300,
+          child: value == todayNum
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text('Todays lucky number is: $todayNum'),
+                    Icon(Icons.done, color: Colors.green),
+                    Text('You won: $value'),
+                  ],
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text('Todays lucky number is: $todayNum'),
+                    Icon(Icons.error, color: Colors.red),
+                    Text('Better luck next time\nYourNumber: $value'),
+                  ],
+                ),
         ),
       ),
+      floatingActionButton: value != todayNum
+          ? FloatingActionButton(
+              onPressed: () {
+                setState(() {
+                  value = randomNum.nextInt(5);
+                });
+              },
+              child: Icon(Icons.add),
+            )
+          : null,
     );
   }
 }

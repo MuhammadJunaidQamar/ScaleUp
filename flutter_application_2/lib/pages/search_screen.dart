@@ -5,19 +5,11 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController text = TextEditingController();
+    TextEditingController _controller = TextEditingController();
     return Scaffold(
       appBar: AppBar(),
       body: Column(
-        children: [
-          Center(child: TextField(controller: text)),
-          MaterialButton(
-            child: Text('button'),
-            onPressed: () {
-              print(text.text.toString());
-            },
-          ),
-        ],
+        children: [Center(child: TextField(controller: _controller))],
       ),
     );
   }

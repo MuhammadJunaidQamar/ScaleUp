@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/pages/chat_screen.dart';
+import 'package:flutter_application_2/pages/search_screen.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
@@ -10,7 +11,22 @@ class MyHomePage extends StatelessWidget {
       length: 4,
       initialIndex: 1,
       child: Scaffold(
-        drawer: Drawer(),
+        drawer: Drawer(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(child: Row(children: [Icon(Icons.home), Text('home')])),
+              InkWell(
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (context) => const SearchScreen(),
+                  ),
+                ),
+                child: Row(children: [Icon(Icons.search), Text('search')]),
+              ),
+            ],
+          ),
+        ),
 
         appBar: AppBar(
           backgroundColor: Colors.green,
@@ -24,7 +40,17 @@ class MyHomePage extends StatelessWidget {
               Tab(text: "calls"),
             ],
           ),
-          actions: [Icon(Icons.menu)],
+          actions: [
+            InkWell(
+              child: Icon(Icons.search),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (context) => const SearchScreen(),
+                ),
+              ),
+            ),
+            Icon(Icons.menu),
+          ],
         ),
         body: TabBarView(
           children: [
